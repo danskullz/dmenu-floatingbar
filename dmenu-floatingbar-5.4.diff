@@ -11,12 +11,10 @@ See also: https://dwm.suckless.org/patches/floatingstatus/
 diff --git a/config.def.h b/config.def.h
 --- a/config.def.h
 +++ b/config.def.h
-@@ -1,20 +1,27 @@
- /* See LICENSE file for copyright and license details. */
+@@ -2,6 +2,12 @@
  /* Default settings; can be overriden by command line. */
  
--static int topbar = 1; /* -b option; if 0, dmenu appears at bottom */
-+static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
+ static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
 +
 +static unsigned int barpadh	= 200;
 +static unsigned int barpadv	= 10;
@@ -25,24 +23,15 @@ diff --git a/config.def.h b/config.def.h
 +
  /* -fn option overrides fonts[0]; default X11 font or font set */
  static const char *fonts[] = {
-	"monospace:size=10"
- };
--static const char *prompt = NULL; /* -p option; prompt to the left of input field */
-+static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
- static const char *colors[SchemeLast][2] = {
--	/* fg bg */
-+	/*     fg         bg       */
+ 	"monospace:size=10"
+@@ -12,6 +18,7 @@
  	[SchemeNorm] = { "#bbbbbb", "#222222" },
  	[SchemeSel] = { "#eeeeee", "#005577" },
  	[SchemeOut] = { "#000000", "#00ffff" },
 +	[SchemeBorder] = { "#005577", "#005577" },
  };
  /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
--static unsigned int lines = 0;
-+static unsigned int lines      = 0;
- 
- /*
-  * Characters not considered part of a word while deleting words
+ static unsigned int lines      = 0;
 diff --git a/dmenu.c b/dmenu.c
 --- a/dmenu.c
 +++ b/dmenu.c
@@ -55,7 +44,7 @@ diff --git a/dmenu.c b/dmenu.c
  
  struct item {
  	char *text;
-@@ -749,7 +749,7 @@
+@@ -633,7 +633,7 @@
  	utf8 = XInternAtom(dpy, "UTF8_STRING", False);
  
  	/* calculate menu geometry */
@@ -64,7 +53,7 @@ diff --git a/dmenu.c b/dmenu.c
  	lines = MAX(lines, 0);
  	mh = (lines + 1) * bh;
  #ifdef XINERAMA
-@@ -778,9 +778,9 @@
+@@ -662,9 +662,9 @@
  				if (INTERSECT(x, y, 1, 1, info[i]) != 0)
  					break;
  
@@ -77,7 +66,7 @@ diff --git a/dmenu.c b/dmenu.c
  		XFree(info);
  	} else
  #endif
-@@ -788,9 +788,9 @@
+@@ -672,9 +672,9 @@
  		if (!XGetWindowAttributes(dpy, parentwin, &wa))
  			die("could not get embedding window attributes: 0x%lx",
  			    parentwin);
@@ -90,10 +79,10 @@ diff --git a/dmenu.c b/dmenu.c
  	}
  	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
  	inputw = mw / 3; /* input width: ~33% of monitor width */
-@@ -802,9 +802,11 @@
- 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask |
- 	                 ButtonPressMask;
- 
+@@ -684,9 +684,11 @@
+ 	swa.override_redirect = True;
+ 	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
+ 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
 -	win = XCreateWindow(dpy, root, x, y, mw, mh, 0,
 +	win = XCreateWindow(dpy, root, x, y, mw, mh, barborder,
  	                    CopyFromParent, CopyFromParent, CopyFromParent,
@@ -103,16 +92,16 @@ diff --git a/dmenu.c b/dmenu.c
  	XSetClassHint(dpy, win, &ch);
  
  	/* input methods */
-@@ -869,10 +871,14 @@
+@@ -751,10 +753,14 @@
  			colors[SchemeNorm][ColBg] = argv[++i];
- 		else if (!strcmp(argv[i], "-nf")) /* normal foreground color */
+ 		else if (!strcmp(argv[i], "-nf"))  /* normal foreground color */
  			colors[SchemeNorm][ColFg] = argv[++i];
 -		else if (!strcmp(argv[i], "-sb"))  /* selected background color */
 +		else if (!strcmp(argv[i], "-sb")) {  /* selected background color */
  			colors[SchemeSel][ColBg] = argv[++i];
 +			colors[SchemeSel][ColFg] = colors[SchemeSel][ColBg];
 +		}
- 		else if (!strcmp(argv[i], "-sf")) /* selected foreground color */
+ 		else if (!strcmp(argv[i], "-sf"))  /* selected foreground color */
  			colors[SchemeSel][ColFg] = argv[++i];
 +		else if (!strcmp(argv[i], "-bo"))  /* border colour */
 +			colors[SchemeBorder][ColFg] = argv[++i];
