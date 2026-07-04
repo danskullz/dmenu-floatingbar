@@ -8,6 +8,14 @@ This is my first time patching suckless software. Please feel free to email me i
 
 See also: https://dwm.suckless.org/patches/floatingstatus/
 
+<div style="text-align: center;">
+  <img src="bar.png" alt="dwm bar" width="1200">
+</div>
+
+<div style="text-align: center;">
+  <img src="dmenu.png" alt="dmenu with patch" width="1200">
+</div>
+
 ## Config
 
 Everything is in ``config.def.h``
