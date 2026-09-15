@@ -8,8 +8,8 @@ An additional `-bo` option has been added to explicitly set the border colour. B
 
 #### Example configuration
 
-* `barpadh` (`int`) – Vertical padding: distance between the bar and the top of the screen.
-* `barpadv` (`int`) – Horizontal padding: distance between the bar and the sides of the screen.
+* `barpadh` (`int`) – Horizontal padding: distance between the bar and the sides of the screen.
+* `barpadv` (`int`) – Vertical padding: distance between the bar and the top of the screen.
 * `barheight` (`int`) – Bar height.
 * `barborder` (`int`) – Border width.
 
