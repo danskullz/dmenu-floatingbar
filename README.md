@@ -15,9 +15,9 @@ An additional `-bo` option has been added to explicitly set the border colour. B
 
 #### Screenshots
 
-![bar](bar.png)
+[![bar](bar-s.png)](bar.png)
 
-![dmenu](dmenu.png)
+[![dmenu](dmenu-s.png)](dmenu.png)
 
 ## Download
 
