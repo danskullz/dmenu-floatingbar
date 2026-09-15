@@ -1,34 +1,28 @@
-# Description
-This patch allows you to transform the dmenu into a floating bar, with customizable height, as well as vertical and horizontal padding. This is an extension of [floatingstatus](https://dwm.suckless.org/patches/floatingstatus/) for dwm.
+# floatingbar
 
-NOTE: Added an extra flag, '-bo', which allows you to specify the colour of the border explicitly.
-By default, the background just inherits the '-sb' flag, to cooperate with default dwm behaviour.
+## Description
 
-This is my first time patching suckless software. Please feel free to email me if you encounter any issues.
+This patch transforms dmenu into a floating bar with configurable height, along with customizable vertical and horizontal padding. It extends the [floatingstatus](https://dwm.suckless.org/patches/floatingstatus/) patch for dwm.
 
-See also: https://dwm.suckless.org/patches/floatingstatus/
+An additional `-bo` option has been added to explicitly set the border colour. By default, the border colour inherits the `-sb` value, matching the default behaviour of dwm.
 
-<div style="text-align: center;">
-  <img src="bar.png" alt="dwm bar" width="1200">
-</div>
+#### Example configuration
 
-<div style="text-align: center;">
-  <img src="dmenu.png" alt="dmenu with patch" width="1200">
-</div>
+* `barpadh` (`int`) – Vertical padding: distance between the bar and the top of the screen.
+* `barpadv` (`int`) – Horizontal padding: distance between the bar and the sides of the screen.
+* `barheight` (`int`) – Bar height.
+* `barborder` (`int`) – Border width.
 
-## Config
+#### Screenshots
 
-Everything is in ``config.def.h``
+![bar](bar.png)
 
-    barpadh - [int] Vertical padding: how far the bar is from the top.
-    barpadv - [int] Horizontal padding: how far the bar is from each side.
-    barheight - [int] Bar height: How long the bar is vertically.
-    barborder - [int] Bar border: How thick the border is.
+![dmenu](dmenu.png)
 
 ## Download
 
-[dmenu-floatingbar-5.4.diff](https://github.com/danskullz/dmenu-floatingbar/raw/refs/heads/main/dmenu-floatingbar-5.4.diff)
+* [dmenu-floatingbar-5.4.diff](dmenu-floatingbar-5.4.diff)
 
-## Authors
+## Author
 
-    Daniel Guihot - daniel@guihot.net
+* Daniel Guihot - [daniel@guihot.net](mailto:daniel@guihot.net)
